@@ -67,8 +67,10 @@ src/main/resources/
 
 ### Requisitos previos
 - Java 21
-- Maven
 - XAMPP con MySQL corriendo
+- IntelliJ IDEA
+
+> **Maven no es necesario instalarlo.** El proyecto incluye el wrapper `mvnw` que lo gestiona automáticamente.
 
 ### Configuración de la base de datos
 El archivo `application.properties` ya está configurado para conectarse a MySQL local:
@@ -85,7 +87,7 @@ server.port=8080
 
 ### Ejecución
 1. Iniciar XAMPP y activar el módulo MySQL
-2. Ejecutar la aplicación desde IntelliJ o con `mvn spring-boot:run`
+2. Ejecutar la aplicación desde IntelliJ o con `.\mvnw spring-boot:run`
 3. Abrir el navegador en `http://localhost:8080`
 
 La base de datos se crea automáticamente. Al iniciar por primera vez, el `DataLoader`
@@ -219,9 +221,15 @@ TipoTarjeta ────────────────────── T
 La documentación JavaDoc se genera automáticamente con cada push a `master`
 mediante GitHub Actions y se publica en GitHub Pages.
 
+📖 **Ver documentación:** https://franncoaggustin.github.io/SistemaAerolinea/javadoc/
+
 Para generarla manualmente:
 ```bash
-mvn javadoc:javadoc
+# Windows
+.\mvnw javadoc:javadoc
+
+# Linux / Mac
+./mvnw javadoc:javadoc
 ```
 La documentación queda en `target/site/apidocs/index.html`.
 
