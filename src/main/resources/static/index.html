@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Aerolínea</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="sa-header">
+        <div class="sa-header-inner">
+            <div class="sa-logo">
+                <span class="sa-logo-icon">✈</span>
+                <span class="sa-logo-text">SistemaAerolinea</span>
+            </div>
+            <nav class="sa-nav" id="nav">
+                <button class="sa-nav-btn active" data-seccion="vuelos">Vuelos</button>
+                <button class="sa-nav-btn" data-seccion="reservas">Reservas</button>
+                <button class="sa-nav-btn" data-seccion="usuarios">Usuarios</button>
+                <button class="sa-nav-btn" data-seccion="consultas">Consultas</button>
+                <button class="sa-nav-btn" data-seccion="aviones">Aviones</button>
+                <button class="sa-nav-btn" data-seccion="catalogo">Catálogo</button>
+                <button class="sa-nav-btn" data-seccion="tarifas">Tarifas</button>
+                <button class="sa-nav-btn" data-seccion="personal">Personal</button>
+                <button class="sa-nav-btn" data-seccion="pagos">Pagos</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="sa-main container-fluid">
+
+        <!-- ==================== VUELOS ==================== -->
+        <section class="sa-seccion" id="sec-vuelos">
+            <div class="sa-seccion-header">
+                <h1 class="sa-seccion-titulo">Vuelos</h1>
+                <button class="btn btn-primary" id="btn-nuevo-vuelo">+ Nuevo Vuelo</button>
+            </div>
+
+            <div class="card mb-4 d-none" id="form-vuelo">
+                <div class="card-body">
+                    <h5 class="card-title mb-3" id="form-vuelo-titulo">Nuevo Vuelo</h5>
+                    <input type="hidden" id="vuelo-id">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Número de Vuelo</label>
+                            <input type="number" class="form-control" id="vuelo-numeroVuelo" placeholder="Ej: 1001">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Estado</label>
+                            <select class="form-select" id="vuelo-estadoVuelo">
+                                <option value="PROGRAMADO">PROGRAMADO</option>
+                                <option value="EN_VUELO">EN VUELO</option>
+                                <option value="ATERRIZADO">ATERRIZADO</option>
+                                <option value="CANCELADO">CANCELADO</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Fecha de Salida</label>
+                            <input type="datetime-local" class="form-control" id="vuelo-fechaSalida">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Avión</label>
+                            <select class="form-select" id="vuelo-avion"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Piloto</label>
+                            <select class="form-select" id="vuelo-piloto"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Aerolínea</label>
+                            <select class="form-select" id="vuelo-aerolinea"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Aeropuerto Origen</label>
+                            <select class="form-select" id="vuelo-aeropuertoOrigen"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Aeropuerto Destino</label>
+                            <select class="form-select" id="vuelo-aeropuertoDestino"></select>
+                        </div>
+                    </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-primary" id="btn-guardar-vuelo">Guardar</button>
+                        <button class="btn btn-secondary" id="btn-cancelar-vuelo">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle" id="tabla-vuelos">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th><th>N° Vuelo</th><th>Estado</th><th>Fecha Salida</th>
+                            <th>Aerolínea</th><th>Origen</th><th>Destino</th><th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-vuelos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== RESERVAS ==================== -->
+        <section class="sa-seccion d-none" id="sec-reservas">
+            <div class="sa-seccion-header">
+                <h1 class="sa-seccion-titulo">Reservas</h1>
+                <button class="btn btn-primary" id="btn-nueva-reserva">+ Nueva Reserva</button>
+            </div>
+
+            <div class="card mb-4 d-none" id="form-reserva">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Nueva Reserva</h5>
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Número de Reserva</label>
+                            <input type="number" class="form-control" id="reserva-numeroReserva" placeholder="Ej: 2001">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Estado</label>
+                            <select class="form-select" id="reserva-estadoReserva">
+                                <option value="CONFIRMADA">CONFIRMADA</option>
+                                <option value="PENDIENTE">PENDIENTE</option>
+                                <option value="CANCELADA">CANCELADA</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Fecha de Reserva</label>
+                            <input type="datetime-local" class="form-control" id="reserva-fechaReserva">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Usuario</label>
+                            <select class="form-select" id="reserva-usuario"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Vuelo</label>
+                            <select class="form-select" id="reserva-vuelo"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Asiento</label>
+                            <select class="form-select" id="reserva-asiento"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Pago</label>
+                            <select class="form-select" id="reserva-pago"></select>
+                        </div>
+                    </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-primary" id="btn-guardar-reserva">Guardar</button>
+                        <button class="btn btn-secondary" id="btn-cancelar-reserva">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th><th>N° Reserva</th><th>Estado</th><th>Fecha</th>
+                            <th>ID Usuario</th><th>ID Vuelo</th><th>ID Asiento</th><th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-reservas"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== USUARIOS ==================== -->
+        <section class="sa-seccion d-none" id="sec-usuarios">
+            <div class="sa-seccion-header">
+                <h1 class="sa-seccion-titulo">Usuarios</h1>
+                <button class="btn btn-primary" id="btn-nuevo-usuario">+ Nuevo Usuario</button>
+            </div>
+
+            <div class="card mb-4 d-none" id="form-usuario">
+                <div class="card-body">
+                    <h5 class="card-title mb-3" id="form-usuario-titulo">Nuevo Usuario</h5>
+                    <input type="hidden" id="usuario-id">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Número de Usuario</label>
+                            <input type="number" class="form-control" id="usuario-numeroUsuario" placeholder="Ej: 3001">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="usuario-correoElectronicoUsuario" placeholder="usuario@email.com">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Contraseña</label>
+                            <input type="text" class="form-control" id="usuario-contraseniaUsuario" placeholder="Contraseña">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Persona</label>
+                            <select class="form-select" id="usuario-persona"></select>
+                        </div>
+                    </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-primary" id="btn-guardar-usuario">Guardar</button>
+                        <button class="btn btn-secondary" id="btn-cancelar-usuario">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle">
+                    <thead class="table-dark">
+                        <tr><th>ID</th><th>N° Usuario</th><th>Correo</th><th>ID Persona</th><th>Acciones</th></tr>
+                    </thead>
+                    <tbody id="tbody-usuarios"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== CONSULTAS ==================== -->
+        <section class="sa-seccion d-none" id="sec-consultas">
+            <div class="sa-seccion-header">
+                <h1 class="sa-seccion-titulo">Consultas</h1>
+                <button class="btn btn-primary" id="btn-nueva-consulta">+ Nueva Consulta</button>
+            </div>
+
+            <div class="card mb-4 d-none" id="form-consulta">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Nueva Consulta</h5>
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Número de Consulta</label>
+                            <input type="number" class="form-control" id="consulta-numeroConsulta" placeholder="Ej: 4001">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Fecha de Consulta</label>
+                            <input type="datetime-local" class="form-control" id="consulta-fechaConsulta">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Tipo</label>
+                            <input type="text" class="form-control" id="consulta-tipoConsulta" placeholder="Ej: RECLAMO">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Estado</label>
+                            <input type="text" class="form-control" id="consulta-estadoConsulta" placeholder="Ej: ABIERTA">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Detalle</label>
+                            <textarea class="form-control" id="consulta-detalleConsulta" rows="2" placeholder="Descripción..."></textarea>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Usuario</label>
+                            <select class="form-select" id="consulta-usuario"></select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Vuelo</label>
+                            <select class="form-select" id="consulta-vuelo"></select>
+                        </div>
+                    </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-primary" id="btn-guardar-consulta">Guardar</button>
+                        <button class="btn btn-secondary" id="btn-cancelar-consulta">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th><th>N° Consulta</th><th>Fecha</th><th>Tipo</th>
+                            <th>Estado</th><th>Detalle</th><th>ID Usuario</th><th>ID Vuelo</th><th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-consultas"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== AVIONES ==================== -->
+        <section class="sa-seccion d-none" id="sec-aviones">
+            <div class="sa-seccion-header">
+                <h1 class="sa-seccion-titulo">Aviones</h1>
+                <button class="btn btn-primary" id="btn-nuevo-avion">+ Nuevo Avión</button>
+            </div>
+
+            <div class="card mb-4 d-none" id="form-avion">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Nuevo Avión</h5>
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label">Número de Avión</label>
+                            <input type="number" class="form-control" id="avion-numeroAvion" placeholder="Ej: 5001">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Tipo de Avión</label>
+                            <input type="text" class="form-control" id="avion-tipoAvion" placeholder="Ej: Boeing 737">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Tipo de Turbina</label>
+                            <input type="text" class="form-control" id="avion-tipoTurbina" placeholder="Ej: Jet">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Aerolínea</label>
+                            <select class="form-select" id="avion-aerolinea"></select>
+                        </div>
+                    </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-primary" id="btn-guardar-avion">Guardar</button>
+                        <button class="btn btn-secondary" id="btn-cancelar-avion">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle">
+                    <thead class="table-dark">
+                        <tr><th>ID</th><th>N° Avión</th><th>Tipo</th><th>Turbina</th><th>Aerolínea</th><th>Acciones</th></tr>
+                    </thead>
+                    <tbody id="tbody-aviones"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== CATÁLOGO ==================== -->
+        <section class="sa-seccion d-none" id="sec-catalogo">
+            <div class="sa-seccion-header">
+                <h1 class="sa-seccion-titulo">Catálogo</h1>
+            </div>
+
+            <div class="row g-4">
+                <!-- Aerolíneas -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Aerolíneas</strong>
+                            <button class="btn btn-primary btn-sm" id="btn-nueva-aerolinea">+ Agregar</button>
+                        </div>
+                        <div class="card-body d-none" id="form-aerolinea">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nombre de Aerolínea</label>
+                                    <input type="text" class="form-control" id="aerolinea-nombreAerolinea" placeholder="Ej: Aerolíneas Argentinas">
+                                </div>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <button class="btn btn-primary" id="btn-guardar-aerolinea">Guardar</button>
+                                <button class="btn btn-secondary" id="btn-cancelar-aerolinea">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered mb-0 align-middle">
+                                <thead class="table-dark"><tr><th>ID</th><th>Nombre</th><th>Acciones</th></tr></thead>
+                                <tbody id="tbody-aerolineas"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aeropuertos -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Aeropuertos</strong>
+                            <button class="btn btn-primary btn-sm" id="btn-nuevo-aeropuerto">+ Agregar</button>
+                        </div>
+                        <div class="card-body d-none" id="form-aeropuerto">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nombre de Aeropuerto</label>
+                                    <input type="text" class="form-control" id="aeropuerto-nombreAeropuerto" placeholder="Ej: El Plumerillo">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Ciudad</label>
+                                    <select class="form-select" id="aeropuerto-ciudad"></select>
+                                </div>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <button class="btn btn-primary" id="btn-guardar-aeropuerto">Guardar</button>
+                                <button class="btn btn-secondary" id="btn-cancelar-aeropuerto">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered mb-0 align-middle">
+                                <thead class="table-dark"><tr><th>ID</th><th>Nombre</th><th>Ciudad</th><th>Acciones</th></tr></thead>
+                                <tbody id="tbody-aeropuertos"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ciudades -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Ciudades</strong>
+                            <button class="btn btn-primary btn-sm" id="btn-nueva-ciudad">+ Agregar</button>
+                        </div>
+                        <div class="card-body d-none" id="form-ciudad">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nombre de Ciudad</label>
+                                    <input type="text" class="form-control" id="ciudad-nombreCiudad" placeholder="Ej: Mendoza">
+                                </div>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <button class="btn btn-primary" id="btn-guardar-ciudad">Guardar</button>
+                                <button class="btn btn-secondary" id="btn-cancelar-ciudad">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered mb-0 align-middle">
+                                <thead class="table-dark"><tr><th>ID</th><th>Nombre</th><th>Acciones</th></tr></thead>
+                                <tbody id="tbody-ciudades"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TARIFAS Y ASIENTOS ==================== -->
+        <section class="sa-seccion d-none" id="sec-tarifas">
+            <div class="sa-seccion-header">
+                <h1 class="sa-seccion-titulo">Tarifas y Asientos</h1>
+            </div>
+
+            <div class="row g-4">
+                <!-- Tarifas -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Tarifas</strong>
+                            <button class="btn btn-primary btn-sm" id="btn-nueva-tarifa">+ Agregar</button>
+                        </div>
+                        <div class="card-body d-none" id="form-tarifa">
+                            <div class="row g-3">
+                                <div class="col-md-2">
+                                    <label class="form-label">N° Tarifa</label>
+                                    <input type="number" class="form-control" id="tarifa-numeroTarifa" placeholder="Ej: 6001">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Precio</label>
+                                    <input type="number" step="0.01" class="form-control" id="tarifa-precioTarifa" placeholder="150.00">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Impuesto</label>
+                                    <input type="number" step="0.01" class="form-control" id="tarifa-impuestoTarifa" placeholder="21.00">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Vuelo</label>
+                                    <select class="form-select" id="tarifa-vuelo"></select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Clase</label>
+                                    <select class="form-select" id="tarifa-clase"></select>
+                                </div>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <button class="btn btn-primary" id="btn-guardar-tarifa">Guardar</button>
+                                <button class="btn btn-secondary" id="btn-cancelar-tarifa">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered mb-0 align-middle">
+                                <thead class="table-dark"><tr><th>ID</th><th>N° Tarifa</th><th>Precio</th><th>Impuesto</th><th>ID Vuelo</th><th>Clase</th><th>Acciones</th></tr></thead>
+                                <tbody id="tbody-tarifas"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asientos -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Asientos</strong>
+                            <button class="btn btn-primary btn-sm" id="btn-nuevo-asiento">+ Agregar</button>
+                        </div>
+                        <div class="card-body d-none" id="form-asiento">
+                            <div class="row g-3">
+                                <div class="col-md-2">
+                                    <label class="form-label">Fila</label>
+                                    <input type="number" class="form-control" id="asiento-filaAsiento" placeholder="12">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Letra</label>
+                                    <input type="text" class="form-control" id="asiento-letraAsiento" placeholder="A" maxlength="2">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Estado</label>
+                                    <select class="form-select" id="asiento-estado">
+                                        <option value="DISPONIBLE">DISPONIBLE</option>
+                                        <option value="OCUPADO">OCUPADO</option>
+                                        <option value="RESERVADO">RESERVADO</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Avión</label>
+                                    <select class="form-select" id="asiento-avion"></select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Clase</label>
+                                    <select class="form-select" id="asiento-clase"></select>
+                                </div>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <button class="btn btn-primary" id="btn-guardar-asiento">Guardar</button>
+                                <button class="btn btn-secondary" id="btn-cancelar-asiento">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered mb-0 align-middle">
+                                <thead class="table-dark"><tr><th>ID</th><th>Fila</th><th>Letra</th><th>Estado</th><th>ID Avión</th><th>Clase</th><th>Acciones</th></tr></thead>
+                                <tbody id="tbody-asientos"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PERSONAL ==================== -->
+        <section class="sa-seccion d-none" id="sec-personal">
+            <div class="sa-seccion-header">
+                <h1 class="sa-seccion-titulo">Personal</h1>
+            </div>
+
+            <div class="row g-4">
+                <!-- Pilotos -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Pilotos</strong>
+                            <button class="btn btn-primary btn-sm" id="btn-nuevo-piloto">+ Agregar</button>
+                        </div>
+                        <div class="card-body d-none" id="form-piloto">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">Número de Piloto</label>
+                                    <input type="number" class="form-control" id="piloto-numeroPiloto" placeholder="Ej: 7001">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Persona</label>
+                                    <select class="form-select" id="piloto-persona"></select>
+                                </div>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <button class="btn btn-primary" id="btn-guardar-piloto">Guardar</button>
+                                <button class="btn btn-secondary" id="btn-cancelar-piloto">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered mb-0 align-middle">
+                                <thead class="table-dark"><tr><th>ID</th><th>N° Piloto</th><th>Nombre</th><th>Apellido</th><th>Acciones</th></tr></thead>
+                                <tbody id="tbody-pilotos"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personas -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Personas</strong>
+                            <button class="btn btn-primary btn-sm" id="btn-nueva-persona">+ Agregar</button>
+                        </div>
+                        <div class="card-body d-none" id="form-persona">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">DNI</label>
+                                    <input type="number" class="form-control" id="persona-dniPersona" placeholder="Ej: 30000000">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="persona-nombrePersona" placeholder="Ej: Juan">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Apellido</label>
+                                    <input type="text" class="form-control" id="persona-apellidoPersona" placeholder="Ej: Pérez">
+                                </div>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <button class="btn btn-primary" id="btn-guardar-persona">Guardar</button>
+                                <button class="btn btn-secondary" id="btn-cancelar-persona">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered mb-0 align-middle">
+                                <thead class="table-dark"><tr><th>ID</th><th>DNI</th><th>Nombre</th><th>Apellido</th><th>Acciones</th></tr></thead>
+                                <tbody id="tbody-personas"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PAGOS Y TARJETAS ==================== -->
+        <section class="sa-seccion d-none" id="sec-pagos">
+            <div class="sa-seccion-header">
+                <h1 class="sa-seccion-titulo">Pagos y Tarjetas</h1>
+            </div>
+
+            <div class="row g-4">
+                <!-- Pagos -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Pagos</strong>
+                            <button class="btn btn-primary btn-sm" id="btn-nuevo-pago">+ Agregar</button>
+                        </div>
+                        <div class="card-body d-none" id="form-pago">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">Número de Pago</label>
+                                    <input type="number" class="form-control" id="pago-numeroPago" placeholder="Ej: 8001">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Cantidad</label>
+                                    <input type="number" step="0.01" class="form-control" id="pago-cantidadPago" placeholder="250.00">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Fecha de Pago</label>
+                                    <input type="datetime-local" class="form-control" id="pago-fechaPago">
+                                </div>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <button class="btn btn-primary" id="btn-guardar-pago">Guardar</button>
+                                <button class="btn btn-secondary" id="btn-cancelar-pago">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered mb-0 align-middle">
+                                <thead class="table-dark"><tr><th>ID</th><th>N° Pago</th><th>Cantidad</th><th>Fecha</th><th>Acciones</th></tr></thead>
+                                <tbody id="tbody-pagos"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjetas -->
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Tarjetas</strong>
+                            <button class="btn btn-primary btn-sm" id="btn-nueva-tarjeta">+ Agregar</button>
+                        </div>
+                        <div class="card-body d-none" id="form-tarjeta">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">Número de Tarjeta</label>
+                                    <input type="number" class="form-control" id="tarjeta-numeroTarjeta" placeholder="4111111111111111">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Tipo de Tarjeta</label>
+                                    <select class="form-select" id="tarjeta-tipoTarjeta"></select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">N° Pago</label>
+                                    <input type="number" class="form-control" id="tarjeta-numeroPago" placeholder="8001">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Cantidad</label>
+                                    <input type="number" step="0.01" class="form-control" id="tarjeta-cantidadPago" placeholder="250.00">
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Fecha Pago</label>
+                                    <input type="datetime-local" class="form-control" id="tarjeta-fechaPago">
+                                </div>
+                            </div>
+                            <div class="mt-3 d-flex gap-2">
+                                <button class="btn btn-primary" id="btn-guardar-tarjeta">Guardar</button>
+                                <button class="btn btn-secondary" id="btn-cancelar-tarjeta">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered mb-0 align-middle">
+                                <thead class="table-dark"><tr><th>ID Pago</th><th>N° Tarjeta</th><th>Tipo</th><th>Acciones</th></tr></thead>
+                                <tbody id="tbody-tarjetas"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TOAST Bootstrap -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+        <div id="toast" class="toast align-items-center text-white border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body" id="toast-body"></div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL Bootstrap -->
+    <div class="modal fade" id="modal-confirmar" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-texto">¿Estás seguro de que querés eliminar este registro?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="modal-btn-confirmar">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

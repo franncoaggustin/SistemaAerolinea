@@ -1,0 +1,198 @@
+/* ====================================================
+   Sistema Aerolínea — styles.css
+   Bootstrap se encarga de: tablas, botones, forms,
+   cards, badges, modal, toast, grid.
+   Este archivo cubre: header, nav, layout, colores.
+   ==================================================== */
+
+:root {
+    --sa-azul:       #0d47a1;
+    --sa-azul-claro: #1565c0;
+    --sa-acento:     #1976d2;
+    --sa-fondo:      #f0f4f8;
+    --sa-header-h:   64px;
+    --sa-font:       'DM Sans', sans-serif;
+}
+
+/* ---- BASE ---- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    font-family: var(--sa-font);
+    background-color: var(--sa-fondo);
+    color: #1a1a2e;
+    margin: 0;
+    padding-top: var(--sa-header-h);
+}
+
+/* ---- HEADER ---- */
+.sa-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--sa-header-h);
+    background: linear-gradient(135deg, var(--sa-azul) 0%, var(--sa-acento) 100%);
+    box-shadow: 0 2px 12px rgba(13, 71, 161, 0.35);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+.sa-header-inner {
+    width: 100%;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    overflow-x: auto;
+}
+
+/* ---- LOGO ---- */
+.sa-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.sa-logo-icon {
+    font-size: 1.4rem;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+
+.sa-logo-text {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+/* ---- NAVEGACIÓN ---- */
+.sa-nav {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.sa-nav::-webkit-scrollbar { display: none; }
+
+.sa-nav-btn {
+    padding: 0.35rem 0.85rem;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: 6px;
+    font-family: var(--sa-font);
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.18s, color 0.18s;
+}
+
+.sa-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+    color: #fff;
+}
+
+.sa-nav-btn.active {
+    background: #fff;
+    color: var(--sa-azul);
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* ---- MAIN ---- */
+.sa-main {
+    padding: 2rem 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ---- SECCIONES ---- */
+.sa-seccion {
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.sa-seccion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.sa-seccion-titulo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--sa-azul);
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+/* ---- CARDS (override sutil Bootstrap) ---- */
+.card {
+    border: 1px solid #dde3ed;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.card-header {
+    background: #f8fafc;
+    border-bottom: 1px solid #dde3ed;
+    border-radius: 10px 10px 0 0 !important;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+}
+
+/* ---- TABLA (override sutil Bootstrap) ---- */
+.table thead.table-dark th {
+    background-color: var(--sa-azul);
+    border-color: var(--sa-azul-claro);
+    font-weight: 500;
+    font-size: 0.82rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.table tbody tr:hover {
+    background-color: #eef4fd;
+}
+
+.table td {
+    font-size: 0.88rem;
+    vertical-align: middle;
+}
+
+/* ---- BOTONES DE ACCIÓN EN TABLA ---- */
+.btn-accion {
+    font-size: 0.78rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+}
+
+/* ---- BADGE DE ESTADO ---- */
+.badge-estado {
+    font-size: 0.72rem;
+    padding: 0.3em 0.6em;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+/* ---- TOAST (override color según tipo) ---- */
+.toast.bg-success { background-color: #198754 !important; }
+.toast.bg-danger  { background-color: #dc3545 !important; }
+
+/* ---- SCROLLBAR GLOBAL ---- */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f0f4f8; }
+::-webkit-scrollbar-thumb { background: #b0bec5; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #78909c; }
