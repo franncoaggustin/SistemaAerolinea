@@ -236,3 +236,4 @@ La documentación queda en `target/site/apidocs/index.html`.
 - **CORS:** configurado para permitir peticiones desde cualquier origen a `/api/**`.
 - **DataLoader:** solo carga datos si la base está vacía (`count() == 0`), evitando
   duplicados al reiniciar la aplicación.
+- 
