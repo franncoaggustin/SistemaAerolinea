@@ -216,7 +216,7 @@ TipoTarjeta ────────────────────── T
 
 ## Documentación JavaDoc
 
-La documentación JavaDoc se genera automáticamente con cada push a `main`
+La documentación JavaDoc se genera automáticamente con cada push a `master`
 mediante GitHub Actions y se publica en GitHub Pages.
 
 Para generarla manualmente:
